@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { TS5ConnectionHandler } from "@/handlers/teamspeak/connectionHandler";
-import { IClient, IChannel, IConnection, ITS5ConnectionHandler } from "@/interfaces/teamspeak";
+import { TS5ConnectionHandler } from "../handlers/teamspeak/connectionHandler";
+import { IClient, IChannel, IConnection, ITS5ConnectionHandler } from "../interfaces/teamspeak";
 import { useEffect, useState } from "react";
 
 export default function useTSRemoteApp({ remoteAppPort = 5899 }: { remoteAppPort: number }) {
