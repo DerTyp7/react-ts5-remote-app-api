@@ -1,0 +1,28 @@
+{
+  "name": "react-ts5-remote-app-api",
+  "version": "1.0.0",
+  "description": "React hook/api for the TeamSpeak5 remote app feature",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "TeamSpeak5",
+    "TS5",
+    "TeamSpeak",
+    "RemoteApp",
+    "API",
+    "Hook",
+    "React",
+    "ReactJS",
+    "Remote"
+  ],
+  "author": "DerTyp7",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^18.2.15",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.1.6"
+  }
+}
