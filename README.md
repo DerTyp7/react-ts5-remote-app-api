@@ -6,6 +6,10 @@ This is a ReactJS hook for the TeamSpeak5 RemoteApp API.
 
 It gathers all the events and methods from the API and makes them available as React states.
 
+Please note that this is still a work in progress and not all events and methods are implemented yet.
+
+Projects which are using this hook: [TS5 OBS Overlay](https://github.com/DerTyp7/ts5-obs-overlay)
+
 ## Table of Contents
 
 - [React TeamSpeak5 RemoteApp API](#react-teamspeak5-remoteapp-api)
