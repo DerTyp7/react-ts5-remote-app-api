@@ -4,6 +4,19 @@ This is a ReactJS hook for the TeamSpeak5 RemoteApp API.
 
 It gathers all the events and methods from the API and makes them available as React states.
 
+## Table of Contents
+
+- [React TeamSpeak5 RemoteApp API](#react-teamspeak5-remoteapp-api)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Examples](#examples)
+    - [Get all clients in the current channel](#get-all-clients-in-the-current-channel)
+  - [Types](#types)
+    - [IConnection](#iconnection)
+    - [IChannel](#ichannel)
+    - [IClient](#iclient)
+
 ## Installation
 
 ```bash
