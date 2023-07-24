@@ -13,6 +13,8 @@ export default function useTSRemoteApp({ remoteAppPort = 5899 }: { remoteAppPort
   const [currentChannel, setCurrentChannel] = useState<IChannel | undefined>(undefined);
   const [currentClient, setCurrentClient] = useState<IClient | undefined>(undefined);
 
+  const [clientsInChannel, setClientsInChannel] = useState<IClient[]>([]);
+
   useEffect(() => {
     const tsConnection: ITS5ConnectionHandler = new TS5ConnectionHandler(
       remoteAppPort,
@@ -36,6 +38,13 @@ export default function useTSRemoteApp({ remoteAppPort = 5899 }: { remoteAppPort
         setCurrentChannel(currentChannel);
       }
     }
+
+    if (currentChannel) {
+      const clientsInChannel = clients.filter((client) => {
+        return client.channel?.id === currentChannel?.id && client.channel.connection.id === activeConnectionId;
+      });
+      setClientsInChannel(clientsInChannel);
+    }
   }, [clients, channels, connections, activeConnectionId]);
 
   return {
@@ -46,5 +55,6 @@ export default function useTSRemoteApp({ remoteAppPort = 5899 }: { remoteAppPort
     currentConnection,
     currentChannel,
     currentClient,
+    clientsInChannel,
   };
 }
