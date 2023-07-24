@@ -1,5 +1,7 @@
 # React TeamSpeak5 RemoteApp API
 
+[![npm](https://img.shields.io/npm/v/react-ts5-remote-app-api.svg)](https://www.npmjs.com/package/react-ts5-remote-app-api) ![downloads](https://img.shields.io/npm/dt/react-ts5-remote-app-api.svg)
+
 This is a ReactJS hook for the TeamSpeak5 RemoteApp API.
 
 It gathers all the events and methods from the API and makes them available as React states.
