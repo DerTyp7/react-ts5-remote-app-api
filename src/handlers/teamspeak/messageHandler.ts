@@ -26,7 +26,7 @@ export class TS5MessageHandler implements ITS5MessageHandler {
 
       if (channelInfos) {
         if (channelInfos.subChannels !== null && channel.id in channelInfos.subChannels) {
-          channelInfos.subChannels[channel.id].forEach((subChannel: IChannel) => {
+          channelInfos.subChannels[channel.id]?.forEach((subChannel: IChannel) => {
             this.dataHandler.addChannel({ ...subChannel, connection: connection });
           });
         }

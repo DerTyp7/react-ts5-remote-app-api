@@ -1,15 +1,15 @@
 {
   "name": "react-ts5-remote-app-api",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "React hook/api for the TeamSpeak5 remote app feature",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "source": "src/index.ts",
+  "types": "dist/cjs/index.d.ts",
   "scripts": {
-    "build": "npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --target esnext --outDir dist/cjs",
-    "prepare": "npm run build"
+    "build": "npm run build:esm && npm run build:js",
+    "build:esm": "tsc --project tsconfig.build.json --outDir dist/esm --module esnext",
+    "build:js": "tsc --project tsconfig.build.json --outDir dist/cjs --module commonjs"
   },
   "keywords": [
     "TeamSpeak5",
@@ -28,27 +28,37 @@
     "url": "https://github.com/DerTyp7/react-ts5-remote-app-api"
   },
   "license": "ISC",
+  "peerDependencies": {
+    "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
   "files": [
     "dist",
-    "LICENSE",
-    "README.md"
+    "src"
   ],
   "dependencies": {
-    "@types/react": "^18.2.15",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tslib": "^2.6.0",
-    "typescript": "^5.1.6"
-  },
-  "peerDependencies": {
-    "react": ">=18"
+    "@rollup/plugin-typescript": "^11.1.2",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "rollup-plugin-typescript-paths": "^1.4.0",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.6.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.1.0",
-    "@typescript-eslint/parser": "^6.1.0",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react-swc": "^3.3.2",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "tsconfig-paths": "^4.2.0"
+    "typescript": "^5.0.2"
   }
 }
