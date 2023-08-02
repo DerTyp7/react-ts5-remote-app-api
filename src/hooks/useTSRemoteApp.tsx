@@ -3,6 +3,7 @@ import { TS5ConnectionHandler } from "../handlers/teamspeak/connectionHandler";
 import { ITSRemoteAppOptions } from "../interfaces/api";
 import { IClient, IChannel, IConnection, ITS5ConnectionHandler } from "../interfaces/teamspeak";
 import { useEffect, useState } from "react";
+import Logger from "../utils/logger";
 
 export default function useTSRemoteApp(options: ITSRemoteAppOptions) {
   const [clients, setClients] = useState<IClient[]>([]);
@@ -20,6 +21,7 @@ export default function useTSRemoteApp(options: ITSRemoteAppOptions) {
     const tsConnection: ITS5ConnectionHandler = new TS5ConnectionHandler(
       options.remoteAppPort ?? 5899,
       options.auth,
+      new Logger(options.logging ?? false),
       setConnections,
       setChannels,
       setClients,

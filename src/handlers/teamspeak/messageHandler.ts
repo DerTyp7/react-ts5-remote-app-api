@@ -1,18 +1,20 @@
-import Logger from "../../utils/logger";
+import { ILogger } from "../../utils/logger";
 import { IChannelInfos, IConnection, IChannel, IAuthMessage, IClientInfo, IClientMovedMessage, IClient, IClientPropertiesUpdatedMessage, ITalkStatusChangedMessage, IClientSelfPropertyUpdatedMessage, IServerPropertiesUpdatedMessage, IConnectStatusChangedMessage, IChannelsMessage, ITS5MessageHandler, ITS5DataHandler } from "../../interfaces/teamspeak";
 
 // Handle incoming messages from TS5 client
 export class TS5MessageHandler implements ITS5MessageHandler {
   ws: WebSocket;
   dataHandler: ITS5DataHandler;
+  logger: ILogger;
 
   setActiveConnectionStateId: React.Dispatch<React.SetStateAction<number>>;
   activeConnectionId = 0;
 
-  constructor(ws: WebSocket, dataHandler: ITS5DataHandler, setActiveConnectionStateId: React.Dispatch<React.SetStateAction<number>>) {
+  constructor(ws: WebSocket, dataHandler: ITS5DataHandler, setActiveConnectionStateId: React.Dispatch<React.SetStateAction<number>>, logger: ILogger) {
     this.ws = ws;
     this.dataHandler = dataHandler;
     this.setActiveConnectionStateId = setActiveConnectionStateId;
+    this.logger = logger;
   }
 
   setActiveConnection(connectionId: number) {
@@ -82,7 +84,7 @@ export class TS5MessageHandler implements ITS5MessageHandler {
               channel: newChannel,
               properties: data.payload.properties,
             });
-          Logger.ts(`New Client found (${data.payload.connectionId} - ${data.payload.clientId} - ${data.payload.properties.nickname})`)
+          this.logger.ts(`New Client found (${data.payload.connectionId} - ${data.payload.clientId} - ${data.payload.properties.nickname})`)
         }
       }, 2000);
 
@@ -90,7 +92,7 @@ export class TS5MessageHandler implements ITS5MessageHandler {
       const newChannel: IChannel | undefined = this.dataHandler.getChannelById(data.payload.newChannelId, data.payload.connectionId);
 
       if (newChannel === undefined || newChannel.id === 0) {
-        Logger.ts(`Client left (${data.payload.connectionId} - ${data.payload.clientId} - ${data.payload.properties.nickname})`)
+        this.logger.ts(`Client left (${data.payload.connectionId} - ${data.payload.clientId} - ${data.payload.properties.nickname})`)
         if (client !== undefined) {
           this.dataHandler.removeClient(client);
         }
@@ -98,7 +100,7 @@ export class TS5MessageHandler implements ITS5MessageHandler {
       }
 
       if (client !== undefined) { // Client already exists
-        Logger.ts(`Client moved (${client.channel.connection.id} - ${client.id} - ${client.properties.nickname})`)
+        this.logger.ts(`Client moved (${client.channel.connection.id} - ${client.id} - ${client.properties.nickname})`)
 
         this.dataHandler.updateClient({
           ...client,
@@ -107,7 +109,7 @@ export class TS5MessageHandler implements ITS5MessageHandler {
 
       } else { // Client does not exist
         // Client joined
-        Logger.ts(`Client joined (${data.payload.connectionId} - ${data.payload.clientId} - ${data.payload.properties.nickname})`)
+        this.logger.ts(`Client joined (${data.payload.connectionId} - ${data.payload.clientId} - ${data.payload.properties.nickname})`)
 
         this.dataHandler.addClient(
           {

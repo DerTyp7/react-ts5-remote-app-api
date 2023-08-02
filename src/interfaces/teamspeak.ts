@@ -1,3 +1,4 @@
+import { ILogger } from "../utils/logger";
 import { ITSRemoteAppAuthPayloadOptions } from "./api";
 
 // Classes
@@ -5,6 +6,7 @@ export interface ITS5ConnectionHandler {
   ws: WebSocket;
   authenticated: boolean;
   remoteAppPort: number;
+  logger: ILogger;
   authPayload: ITSRemoteAppAuthPayloadOptions;
   dataHandler: ITS5DataHandler;
   messageHandler: ITS5MessageHandler;
@@ -16,6 +18,7 @@ export interface ITS5DataHandler {
   localConnections: IConnection[];
   localChannels: IChannel[];
   localClients: IClient[];
+  logger: ILogger;
   setConnections: React.Dispatch<React.SetStateAction<IConnection[]>>;
   setChannels: React.Dispatch<React.SetStateAction<IChannel[]>>;
   setClients: React.Dispatch<React.SetStateAction<IClient[]>>;
@@ -37,6 +40,7 @@ export interface ITS5DataHandler {
 export interface ITS5MessageHandler {
   ws: WebSocket;
   dataHandler: ITS5DataHandler;
+  logger: ILogger;
   setActiveConnectionStateId: React.Dispatch<React.SetStateAction<number>>;
   activeConnectionId: number;
   setActiveConnection(connectionId: number): void;

@@ -1,5 +1,6 @@
 export interface ITSRemoteAppOptions {
   remoteAppPort: number;
+  logging: boolean;
   auth: ITSRemoteAppAuthPayloadOptions,
 }
 

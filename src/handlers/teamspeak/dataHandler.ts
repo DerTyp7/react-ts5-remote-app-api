@@ -1,4 +1,4 @@
-import Logger from "../..//utils/logger";
+import { ILogger } from "../..//utils/logger";
 import { IConnection, IChannel, IClient, ITS5DataHandler } from "../../interfaces/teamspeak";
 
 
@@ -18,11 +18,14 @@ export class TS5DataHandler implements ITS5DataHandler {
   setChannels: React.Dispatch<React.SetStateAction<IChannel[]>>;
   setClients: React.Dispatch<React.SetStateAction<IClient[]>>;
 
+  logger: ILogger;
   constructor(
     // State setters for App.tsx
     setConnections: React.Dispatch<React.SetStateAction<IConnection[]>>,
     setChannels: React.Dispatch<React.SetStateAction<IChannel[]>>,
-    setClients: React.Dispatch<React.SetStateAction<IClient[]>>
+    setClients: React.Dispatch<React.SetStateAction<IClient[]>>,
+
+    logger: ILogger,
   ) {
     this.setConnections = setConnections;
     this.setChannels = setChannels;
@@ -31,6 +34,8 @@ export class TS5DataHandler implements ITS5DataHandler {
     this.localConnections = [];
     this.localChannels = [];
     this.localClients = [];
+
+    this.logger = logger;
   }
 
   // Update App.tsx states
@@ -59,88 +64,88 @@ export class TS5DataHandler implements ITS5DataHandler {
 
   // Add data to local lists and update states
   addConnection(connection: IConnection) {
-    Logger.log("Adding connection...", connection)
+    this.logger.log("Adding connection...", connection)
 
     const existingConnection: IConnection | undefined = this.localConnections.find((localConnection: IConnection) => localConnection.id === connection.id);
 
     if (existingConnection == undefined) {
       this.localConnections.push(connection);
       this.updateConnectionsState();
-      Logger.log("Connection added")
+      this.logger.log("Connection added")
     } else {
-      Logger.log("Connection already exists")
+      this.logger.log("Connection already exists")
     }
   }
 
   addChannel(channel: IChannel) {
-    Logger.log("Adding channel...", channel)
+    this.logger.log("Adding channel...", channel)
     const existingChannel: IChannel | undefined = this.localChannels.find((localChannel: IChannel) => localChannel.id === channel.id && localChannel.connection.id === channel.connection.id);
 
     if (existingChannel == undefined) {
       this.localChannels.push(channel);
       this.updateChannelsState();
-      Logger.log("Channel added")
+      this.logger.log("Channel added")
     } else {
-      Logger.log("Channel already exists")
+      this.logger.log("Channel already exists")
     }
   }
 
   addClient(client: IClient) {
-    Logger.log("Adding client...", client)
+    this.logger.log("Adding client...", client)
     const existingClient: IClient | undefined = this.localClients.find((localClient: IClient) => localClient.id === client.id && localClient.channel?.connection.id === client.channel?.connection.id);
 
     if (existingClient == undefined) {
       this.localClients.push(client);
       this.updateClientsState();
-      Logger.log("Client added")
+      this.logger.log("Client added")
     } else {
-      Logger.log("Client already exists")
+      this.logger.log("Client already exists")
     }
   }
 
   // Update data in local lists and update states
   updateConnection(connection: IConnection) {
-    Logger.log("Updating connection...", connection)
+    this.logger.log("Updating connection...", connection)
     const existingConnection: IConnection | undefined = this.localConnections.find((localConnection: IConnection) => localConnection.id === connection.id);
 
     if (existingConnection !== undefined) {
       this.localConnections[this.localConnections.indexOf(existingConnection)] = connection;
       this.updateConnectionsState();
-      Logger.log("Connection updated")
+      this.logger.log("Connection updated")
     } else {
-      Logger.log("Connection does not exist")
+      this.logger.log("Connection does not exist")
     }
   }
 
   updateChannel(channel: IChannel) {
-    Logger.log("Updating channel...", channel)
+    this.logger.log("Updating channel...", channel)
     const existingChannel: IChannel | undefined = this.localChannels.find((localChannel: IChannel) => localChannel.id === channel.id && localChannel.connection.id === channel.connection.id);
 
     if (existingChannel !== undefined) {
       this.localChannels[this.localChannels.indexOf(existingChannel)] = channel;
       this.updateChannelsState();
-      Logger.log("Channel updated")
+      this.logger.log("Channel updated")
     } else {
-      Logger.log("Channel does not exist")
+      this.logger.log("Channel does not exist")
     }
   }
 
   updateClient(client: IClient) {
-    Logger.log("Updating client...", client)
+    this.logger.log("Updating client...", client)
     const existingClient: IClient | undefined = this.localClients.find((localClient: IClient) => localClient.id === client.id && localClient.channel?.connection.id === client.channel?.connection.id);
 
     if (existingClient !== undefined) {
       this.localClients[this.localClients.indexOf(existingClient)] = client;
       this.updateClientsState();
-      Logger.log("Client updated")
+      this.logger.log("Client updated")
     } else {
-      Logger.log("Client does not exist")
+      this.logger.log("Client does not exist")
     }
   }
 
   // Remove data from local lists and update states
   removeConnection(connection: IConnection) {
-    Logger.log("Removing connection...", connection)
+    this.logger.log("Removing connection...", connection)
     const existingConnection: IConnection | undefined = this.localConnections.find((localConnection: IConnection) => localConnection.id === connection.id);
 
     if (existingConnection !== undefined) {
@@ -153,14 +158,14 @@ export class TS5DataHandler implements ITS5DataHandler {
       this.updateChannelsState();
       this.updateClientsState();
       this.updateConnectionsState();
-      Logger.log("Connection removed")
+      this.logger.log("Connection removed")
     } else {
-      Logger.log("Connection does not exist")
+      this.logger.log("Connection does not exist")
     }
   }
 
   removeChannel(channel: IChannel) {
-    Logger.log("Removing channel...", channel)
+    this.logger.log("Removing channel...", channel)
     const existingChannel: IChannel | undefined = this.localChannels.find((localChannel: IChannel) => localChannel.id === channel.id && localChannel.connection.id === channel.connection.id);
 
     if (existingChannel !== undefined) {
@@ -171,22 +176,22 @@ export class TS5DataHandler implements ITS5DataHandler {
 
       this.updateClientsState();
       this.updateChannelsState();
-      Logger.log("Channel removed")
+      this.logger.log("Channel removed")
     } else {
-      Logger.log("Channel does not exist")
+      this.logger.log("Channel does not exist")
     }
   }
 
   removeClient(client: IClient) {
-    Logger.log("Removing client...", client)
+    this.logger.log("Removing client...", client)
     const existingClient: IClient | undefined = this.localClients.find((localClient: IClient) => localClient.id === client.id && localClient.channel?.connection.id === client.channel?.connection.id);
 
     if (existingClient !== undefined) {
       this.localClients.splice(this.localClients.indexOf(existingClient), 1);
       this.updateClientsState();
-      Logger.log("Client removed")
+      this.logger.log("Client removed")
     } else {
-      Logger.log("Client does not exist")
+      this.logger.log("Client does not exist")
     }
   }
 
