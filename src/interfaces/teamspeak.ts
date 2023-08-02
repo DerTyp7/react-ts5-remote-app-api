@@ -1,8 +1,11 @@
+import { ITSRemoteAppAuthPayloadOptions } from "./api";
+
 // Classes
 export interface ITS5ConnectionHandler {
   ws: WebSocket;
   authenticated: boolean;
   remoteAppPort: number;
+  authPayload: ITSRemoteAppAuthPayloadOptions;
   dataHandler: ITS5DataHandler;
   messageHandler: ITS5MessageHandler;
   reconnect(): void;

@@ -2,6 +2,7 @@ import { IAuthSenderPayload, IChannel, IClient, IConnection, ITS5ConnectionHandl
 import { TS5DataHandler } from "./dataHandler";
 import { TS5MessageHandler } from "./messageHandler";
 import Logger from "../../utils/logger";
+import { ITSRemoteAppAuthPayloadOptions } from "../../interfaces/api";
 
 
 // Establish connection to TS5 client
@@ -10,13 +11,14 @@ export class TS5ConnectionHandler implements ITS5ConnectionHandler {
   ws: WebSocket; // Websocket connection to TS5 client
   authenticated = false; // Is the connection authenticated?
   remoteAppPort: number; // Port of TS5 client
+  authPayload: ITSRemoteAppAuthPayloadOptions; // Authentication payload
   dataHandler: ITS5DataHandler; // Handles data/lists and states
   messageHandler: ITS5MessageHandler; // Handles messages received from TS5 client
 
   constructor(
     // Port of TS5 client
     remoteAppPort: number,
-
+    authPayload: ITSRemoteAppAuthPayloadOptions,
     // State setters for dataHandler
     setConnections: React.Dispatch<React.SetStateAction<IConnection[]>>,
     setChannels: React.Dispatch<React.SetStateAction<IChannel[]>>,
@@ -27,6 +29,7 @@ export class TS5ConnectionHandler implements ITS5ConnectionHandler {
 
     // Create websocket connection to TS5 client
     this.remoteAppPort = remoteAppPort;
+    this.authPayload = authPayload;
     this.ws = new WebSocket(`ws://localhost:${this.remoteAppPort}`);
 
     // Create dataHandler and messageHandler
@@ -53,14 +56,11 @@ export class TS5ConnectionHandler implements ITS5ConnectionHandler {
     const initalPayload: IAuthSenderPayload = {
       type: "auth",
       payload: {
-        identifier: "de.tealfire.obs",
-        version: "1.1.3",
-        name: "TS5 OBS Overlay",
-        description: "A OBS overlay for TS5 by DerTyp876",
+        ...this.authPayload,
         content: {
           apiKey: localStorage.getItem("apiKey") ?? "",
         },
-      },
+      }
     };
 
     this.ws.onopen = () => {

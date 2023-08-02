@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { TS5ConnectionHandler } from "../handlers/teamspeak/connectionHandler";
+import { ITSRemoteAppOptions } from "../interfaces/api";
 import { IClient, IChannel, IConnection, ITS5ConnectionHandler } from "../interfaces/teamspeak";
 import { useEffect, useState } from "react";
 
-export default function useTSRemoteApp({ remoteAppPort = 5899 }: { remoteAppPort: number }) {
+export default function useTSRemoteApp(options: ITSRemoteAppOptions) {
   const [clients, setClients] = useState<IClient[]>([]);
   const [channels, setChannels] = useState<IChannel[]>([]);
   const [connections, setConnections] = useState<IConnection[]>([]);
@@ -17,7 +18,8 @@ export default function useTSRemoteApp({ remoteAppPort = 5899 }: { remoteAppPort
 
   useEffect(() => {
     const tsConnection: ITS5ConnectionHandler = new TS5ConnectionHandler(
-      remoteAppPort,
+      options.remoteAppPort ?? 5899,
+      options.auth,
       setConnections,
       setChannels,
       setClients,
