@@ -1,5 +1,6 @@
 import { ILogger } from "utils/logger";
-import { IChannelInfos, IConnection, IChannel, IAuthMessage, IClientInfo, IClientMovedMessage, IClient, IClientPropertiesUpdatedMessage, ITalkStatusChangedMessage, IClientSelfPropertyUpdatedMessage, IServerPropertiesUpdatedMessage, IConnectStatusChangedMessage, IChannelsMessage, ITS5MessageHandler, ITS5DataHandler } from "interfaces/teamspeak";
+import { IChannelInfos, IConnection, IChannel, IAuthMessage, IClientInfo, IClientMovedMessage, IClient, IClientPropertiesUpdatedMessage, ITalkStatusChangedMessage, IClientSelfPropertyUpdatedMessage, IServerPropertiesUpdatedMessage, IConnectStatusChangedMessage, IChannelsMessage, ITS5MessageHandler, ITS5DataHandler, IChannelCreatedMessage } from "interfaces/teamspeak";
+import { log } from "console";
 
 // Handle incoming messages from TS5 client
 export class TS5MessageHandler implements ITS5MessageHandler {
@@ -25,15 +26,13 @@ export class TS5MessageHandler implements ITS5MessageHandler {
   parseChannelInfos(channelInfos: IChannelInfos, connection: IConnection) {
     channelInfos.rootChannels.forEach((channel: IChannel) => {
       this.dataHandler.addChannel({ ...channel, connection: connection });
-
-      if (channelInfos) {
-        if (channelInfos.subChannels !== null && channel.id in channelInfos.subChannels) {
-          channelInfos.subChannels[channel.id]?.forEach((subChannel: IChannel) => {
-            this.dataHandler.addChannel({ ...subChannel, connection: connection });
-          });
-        }
-      }
     });
+
+    for (const key in channelInfos.subChannels) {
+      channelInfos.subChannels[key]?.forEach((subChannel: IChannel) => {
+        this.dataHandler.addChannel({ ...subChannel, connection: connection });
+      });
+    }
   }
 
   // This message is sent by the TS5 server when the client is connected
@@ -70,10 +69,9 @@ export class TS5MessageHandler implements ITS5MessageHandler {
   handleClientMovedMessage(data: IClientMovedMessage) {
     const client: IClient | undefined = this.dataHandler.getClientById(data.payload.clientId, data.payload.connectionId);
 
-
     //* This gets called when we are connecting to the server and the new clients get loaded
     if (+data.payload.oldChannelId == 0) { // Create new client(when connecting to server)
-      //set timout to wait for channels to be created
+      //set timeout to wait for channels to be created
       setTimeout(() => {
         const newChannel = this.dataHandler.getChannelById(data.payload.newChannelId, data.payload.connectionId);
         if (newChannel !== undefined) {
@@ -149,6 +147,7 @@ export class TS5MessageHandler implements ITS5MessageHandler {
     // console.log(this.dataHandler.localClients)
 
   }
+
   handleClientSelfPropertyUpdatedMessage(data: IClientSelfPropertyUpdatedMessage) {
     const connection: IConnection | undefined = this.dataHandler.getConnectionById(this.activeConnectionId);
 
@@ -195,5 +194,20 @@ export class TS5MessageHandler implements ITS5MessageHandler {
         this.parseChannelInfos(data.payload.info, connection);
       }
     }, 1000);
+  }
+
+  handleChannelCreatedMessage(data: IChannelCreatedMessage) {
+    const connection = this.dataHandler.getConnectionById(data.payload.connectionId);
+
+    if (connection !== undefined) {
+      this.dataHandler.addChannel(
+        {
+          id: data.payload.channelId,
+          connection: connection,
+          order: data.payload.properties.order,
+          parentId: data.payload.parentId,
+          properties: data.payload.properties,
+        });
+    }
   }
 }

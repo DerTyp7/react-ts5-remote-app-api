@@ -56,7 +56,7 @@ export class TS5ConnectionHandler implements ITS5ConnectionHandler {
     this.logger.log('Connecting to TS5 client...');
 
     // Create authentication payload
-    const initalPayload: IAuthSenderPayload = {
+    const initialPayload: IAuthSenderPayload = {
       type: "auth",
       payload: {
         ...this.authPayload,
@@ -68,15 +68,15 @@ export class TS5ConnectionHandler implements ITS5ConnectionHandler {
 
     this.ws.onopen = () => {
       // Send authentication payload to TS5 client
-      this.ws.send(JSON.stringify(initalPayload));
-      this.logger.wsSent(initalPayload);
+      this.ws.send(JSON.stringify(initialPayload));
+      this.logger.wsSent(initialPayload);
     };
 
     this.ws.onclose = (event) => {
       this.logger.log("WebSocket connection closed", event);
 
       // If the connection was closed before authentication, remove the API key from local storage
-      // OBS weirdly caches the localstorage and is very stubborn about clearing it (even when clicken "Clear Cache")
+      // OBS weirdly caches the localstorage and is very stubborn about clearing it (even when clicking "Clear Cache")
       if (!this.authenticated) {
         this.logger.log("WebSocket connection closed before authentication");
         localStorage.removeItem("apiKey");
@@ -119,6 +119,9 @@ export class TS5ConnectionHandler implements ITS5ConnectionHandler {
           break;
         case "channels":
           this.messageHandler.handleChannelsMessage(data);
+          break;
+        case "channelCreated":
+          this.messageHandler.handleChannelCreatedMessage(data);
           break;
         default:
           this.logger.log(`No handler for event type: ${data.type}`);

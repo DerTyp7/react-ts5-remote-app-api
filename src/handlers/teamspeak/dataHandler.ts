@@ -4,7 +4,7 @@ import { IConnection, IChannel, IClient, ITS5DataHandler } from "interfaces/team
 
 /**
  * Handles data received from TS5 client (list of connections, channels and clients)
- * Updates the states of App.tsx
+ * Updates the states of useTSRemoteApp.tsx
  */
 export class TS5DataHandler implements ITS5DataHandler {
   // Local lists of connections, channels and clients
@@ -36,6 +36,18 @@ export class TS5DataHandler implements ITS5DataHandler {
     this.localClients = [];
 
     this.logger = logger;
+  }
+
+  get connections(): IConnection[] {
+    return this.localConnections;
+  }
+
+  get channels(): IChannel[] {
+    return this.localChannels;
+  }
+
+  get clients(): IClient[] {
+    return this.localClients;
   }
 
   // Update App.tsx states

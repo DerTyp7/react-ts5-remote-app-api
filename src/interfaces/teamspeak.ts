@@ -35,6 +35,10 @@ export interface ITS5DataHandler {
   getConnectionById(id: number): IConnection | undefined;
   getChannelById(id: number, connectionId: number): IChannel | undefined;
   getClientById(id: number, connectionId: number): IClient | undefined;
+
+  readonly connections: IConnection[];
+  readonly channels: IChannel[];
+  readonly clients: IClient[];
 }
 
 export interface ITS5MessageHandler {
@@ -53,6 +57,7 @@ export interface ITS5MessageHandler {
   handleServerPropertiesUpdatedMessage(data: IServerPropertiesUpdatedMessage): void;
   handleConnectStatusChangedMessage(data: IConnectStatusChangedMessage): void;
   handleChannelsMessage(data: IChannelsMessage): void;
+  handleChannelCreatedMessage(data: IChannelCreatedMessage): void;
 }
 
 // Remote App
@@ -344,5 +349,15 @@ export interface IChannelsMessage {
   payload: {
     connectionId: number;
     info: IChannelInfos
+  }
+}
+
+export interface IChannelCreatedMessage {
+  type: "channelCreated";
+  payload: {
+    channelId: number;
+    connectionId: number;
+    parentId: string;
+    properties: IChannelProperties;
   }
 }
