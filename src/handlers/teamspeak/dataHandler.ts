@@ -1,5 +1,5 @@
-import { ILogger } from "../..//utils/logger";
-import { IConnection, IChannel, IClient, ITS5DataHandler } from "../../interfaces/teamspeak";
+import { ILogger } from "utils/logger";
+import { IConnection, IChannel, IClient, ITS5DataHandler } from "interfaces/teamspeak";
 
 
 /**

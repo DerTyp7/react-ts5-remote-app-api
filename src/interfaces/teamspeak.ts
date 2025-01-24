@@ -1,5 +1,5 @@
-import { ILogger } from "../utils/logger";
-import { ITSRemoteAppAuthPayloadOptions } from "./api";
+import { ILogger } from "utils/logger";
+import { ITSRemoteAppAuthPayloadOptions } from "interfaces/api";
 
 // Classes
 export interface ITS5ConnectionHandler {

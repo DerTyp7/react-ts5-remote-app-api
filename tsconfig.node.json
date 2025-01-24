@@ -3,6 +3,7 @@
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",
+    "baseUrl": "./src",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   },

@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { TS5ConnectionHandler } from "../handlers/teamspeak/connectionHandler";
-import { ITSRemoteAppOptions } from "../interfaces/api";
-import { IClient, IChannel, IConnection, ITS5ConnectionHandler } from "../interfaces/teamspeak";
+import { TS5ConnectionHandler } from "handlers/teamspeak/connectionHandler";
+import { ITSRemoteAppOptions } from "interfaces/api";
+import { IClient, IChannel, IConnection, ITS5ConnectionHandler } from "interfaces/teamspeak";
 import { useEffect, useState } from "react";
-import Logger from "../utils/logger";
+import Logger from "utils/logger";
 
 export default function useTSRemoteApp(options: ITSRemoteAppOptions) {
   const [clients, setClients] = useState<IClient[]>([]);
