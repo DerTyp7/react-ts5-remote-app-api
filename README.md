@@ -1,18 +1,18 @@
-# React TeamSpeak5 RemoteApp API
+# React TeamSpeak5/6 RemoteApp API
 
 [![npm](https://img.shields.io/npm/v/react-ts5-remote-app-api.svg)](https://www.npmjs.com/package/react-ts5-remote-app-api) ![downloads](https://img.shields.io/npm/dt/react-ts5-remote-app-api.svg)
 
-This is a ReactJS hook for the TeamSpeak5 RemoteApp API.
+This is a ReactJS hook for the TeamSpeak5/6 RemoteApp API.
 
 It gathers all the events and methods from the API and makes them available as React states.
 
 Please note that this is still a work in progress and not all events and methods are implemented yet.
 
-Projects which are using this hook: [TS5 OBS Overlay](https://github.com/DerTyp7/ts5-obs-overlay)
+Projects which are using this hook: [TeamSpeak OBS Overlay](https://github.com/DerTyp7/ts5-obs-overlay)
 
 ## Table of Contents
 
-- [React TeamSpeak5 RemoteApp API](#react-teamspeak5-remoteapp-api)
+- [React TeamSpeak5/6 RemoteApp API](#react-teamspeak56-remoteapp-api)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -26,13 +26,13 @@ Projects which are using this hook: [TS5 OBS Overlay](https://github.com/DerTyp7
 ## Installation
 
 ```bash
-npm install react-ts5-remote-app-api
+npm install react-teamspeak-remote-app-api
 ```
 
 ## Usage
 
 ```Typescript
-import useTSRemoteApp, { IClient } from "react-ts5-remote-app-api";
+import useTSRemoteApp, { IClient } from "react-teamspeak-remote-app-api";
 
 export default function App() {
   const {
@@ -57,7 +57,7 @@ export default function App() {
 ### Get all clients in the current channel
 
 ```Typescript
-import useTSRemoteApp, { IClient } from "react-ts5-remote-app-api";
+import useTSRemoteApp, { IClient } from "react-teamspeak-remote-app-api";
 
 default function App() {
   const { clientsInChannel } = useTSRemoteApp({

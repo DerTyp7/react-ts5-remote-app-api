@@ -1,7 +1,7 @@
 {
-  "name": "react-ts5-remote-app-api",
+  "name": "react-teamspeak-remote-app-api",
   "version": "2.0.0",
-  "description": "React hook/api for the TeamSpeak5 remote app feature",
+  "description": "React hook/api for the TeamSpeak5/6 remote app feature",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "source": "src/index.ts",
@@ -27,7 +27,7 @@
   "author": "DerTyp7",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DerTyp7/react-ts5-remote-app-api"
+    "url": "https://github.com/DerTyp7/react-teamspeak-remote-app-api"
   },
   "license": "ISC",
   "peerDependencies": {
