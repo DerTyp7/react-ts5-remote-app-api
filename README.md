@@ -1,6 +1,6 @@
 # React TeamSpeak5/6 RemoteApp API
 
-[![npm](https://img.shields.io/npm/v/react-ts5-remote-app-api.svg)](https://www.npmjs.com/package/react-ts5-remote-app-api) ![downloads](https://img.shields.io/npm/dt/react-ts5-remote-app-api.svg)
+[![npm](https://img.shields.io/npm/v/react-teamspeak-remote-app-api.svg)](https://www.npmjs.com/package/react-teamspeak-remote-app-api) ![downloads](https://img.shields.io/npm/dt/react-teamspeak-remote-app-api.svg)
 
 This is a ReactJS hook for the TeamSpeak5/6 RemoteApp API.
 
@@ -8,7 +8,7 @@ It gathers all the events and methods from the API and makes them available as R
 
 Please note that this is still a work in progress and not all events and methods are implemented yet.
 
-Projects which are using this hook: [TeamSpeak OBS Overlay](https://github.com/DerTyp7/ts5-obs-overlay)
+Projects which are using this hook: [TeamSpeak OBS Overlay](https://github.com/DerTyp7/teamspeak-obs-overlay)
 
 ## Table of Contents
 
